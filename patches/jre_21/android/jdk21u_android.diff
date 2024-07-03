@@ -1,8 +1,8 @@
 diff --git a/make/autoconf/flags-cflags.m4 b/make/autoconf/flags-cflags.m4
-index 1fdd0143a..705b3e1f9 100644
+index f8fbe14cc..315965e8e 100644
 --- a/make/autoconf/flags-cflags.m4
 +++ b/make/autoconf/flags-cflags.m4
-@@ -409,7 +409,8 @@ AC_DEFUN([FLAGS_SETUP_CFLAGS_HELPER],
+@@ -426,7 +426,8 @@ AC_DEFUN([FLAGS_SETUP_CFLAGS_HELPER],
    #### OS DEFINES, these should be independent on toolchain
    if test "x$OPENJDK_TARGET_OS" = xlinux; then
      CFLAGS_OS_DEF_JVM="-DLINUX"
@@ -13,10 +13,10 @@ index 1fdd0143a..705b3e1f9 100644
      CFLAGS_OS_DEF_JVM="-D_ALLBSD_SOURCE -D_DARWIN_C_SOURCE -D_XOPEN_SOURCE"
      CFLAGS_OS_DEF_JDK="-D_ALLBSD_SOURCE -D_DARWIN_UNLIMITED_SELECT"
 diff --git a/make/autoconf/flags-ldflags.m4 b/make/autoconf/flags-ldflags.m4
-index 2aca285d3..494262487 100644
+index e5c345fde..b8167551a 100644
 --- a/make/autoconf/flags-ldflags.m4
 +++ b/make/autoconf/flags-ldflags.m4
-@@ -173,7 +173,9 @@ AC_DEFUN([FLAGS_SETUP_LDFLAGS_CPU_DEP],
+@@ -186,7 +186,9 @@ AC_DEFUN([FLAGS_SETUP_LDFLAGS_CPU_DEP],
         test "x${OPENJDK_$1_CPU}" = xmips64el; then
        $1_CPU_LDFLAGS="${$1_CPU_LDFLAGS} -Wl,--hash-style=sysv"
      else
@@ -42,7 +42,7 @@ index 6a7109342..2d74ffc5b 100644
    fi
    if test "x$with_freetype" != "x" ; then
 diff --git a/make/autoconf/libraries.m4 b/make/autoconf/libraries.m4
-index a50ce5731..eb9545984 100644
+index a1fc81564..73e116b05 100644
 --- a/make/autoconf/libraries.m4
 +++ b/make/autoconf/libraries.m4
 @@ -42,8 +42,8 @@ m4_include([lib-tests.m4])
@@ -68,7 +68,7 @@ index a50ce5731..eb9545984 100644
    else
      # All other instances need fontconfig, even if building headless only,
 diff --git a/make/autoconf/platform.m4 b/make/autoconf/platform.m4
-index babb24a9b..bcf1e9b41 100644
+index df610cc48..62733faa6 100644
 --- a/make/autoconf/platform.m4
 +++ b/make/autoconf/platform.m4
 @@ -202,6 +202,10 @@ AC_DEFUN([PLATFORM_EXTRACT_VARS_FROM_OS],
@@ -83,10 +83,10 @@ index babb24a9b..bcf1e9b41 100644
        VAR_OS=macosx
        VAR_OS_TYPE=unix
 diff --git a/make/autoconf/toolchain.m4 b/make/autoconf/toolchain.m4
-index adb4e182d..e2ee96798 100644
+index 289eec335..56fff8f26 100644
 --- a/make/autoconf/toolchain.m4
 +++ b/make/autoconf/toolchain.m4
-@@ -903,11 +903,14 @@ AC_DEFUN_ONCE([TOOLCHAIN_SETUP_BUILD_COMPILERS],
+@@ -944,11 +944,14 @@ AC_DEFUN_ONCE([TOOLCHAIN_SETUP_BUILD_COMPILERS],
  
      PATH="$OLDPATH"
  
@@ -169,7 +169,7 @@ index d80b804a2..fd2a8ed15 100644
    ifneq ($(FILTER_SYMBOLS_PATTERN), )
      FILTER_SYMBOLS_PATTERN := $(FILTER_SYMBOLS_PATTERN)|
 diff --git a/make/hotspot/lib/JvmOverrideFiles.gmk b/make/hotspot/lib/JvmOverrideFiles.gmk
-index 377018cdb..c1c624896 100644
+index b50d6f8bb..441c553fb 100644
 --- a/make/hotspot/lib/JvmOverrideFiles.gmk
 +++ b/make/hotspot/lib/JvmOverrideFiles.gmk
 @@ -62,7 +62,8 @@ ifeq ($(call isTargetOs, linux), true)
@@ -183,10 +183,10 @@ index 377018cdb..c1c624896 100644
      # significantly reduce the GC pause time on 32 bit Linux/Unix platforms by
      # compiling without the PIC flag (-fPIC on linux).
 diff --git a/make/modules/java.base/lib/CoreLibraries.gmk b/make/modules/java.base/lib/CoreLibraries.gmk
-index 186eff3d6..ca76357b0 100644
+index 8b1a0a90f..b2c2f083d 100644
 --- a/make/modules/java.base/lib/CoreLibraries.gmk
 +++ b/make/modules/java.base/lib/CoreLibraries.gmk
-@@ -117,6 +117,10 @@ $(eval $(call SetupJdkLibrary, BUILD_LIBJAVA, \
+@@ -78,6 +78,10 @@ $(eval $(call SetupJdkLibrary, BUILD_LIBJAVA, \
  
  TARGETS += $(BUILD_LIBJAVA)
  
@@ -211,10 +211,10 @@ index be1ac3f1f..4dd31c4b1 100644
  endif
  
 diff --git a/make/modules/java.desktop/lib/Awt2dLibraries.gmk b/make/modules/java.desktop/lib/Awt2dLibraries.gmk
-index 96576bb8d..13dd8e3e5 100644
+index c86d8ab9e..da8bb9cbc 100644
 --- a/make/modules/java.desktop/lib/Awt2dLibraries.gmk
 +++ b/make/modules/java.desktop/lib/Awt2dLibraries.gmk
-@@ -538,7 +538,7 @@ $(eval $(call SetupJdkLibrary, BUILD_LIBFONTMANAGER, \
+@@ -546,7 +546,7 @@ $(eval $(call SetupJdkLibrary, BUILD_LIBFONTMANAGER, \
      LDFLAGS_unix := -L$(INSTALL_LIBRARIES_HERE), \
      LDFLAGS_aix := -Wl$(COMMA)-berok, \
      LIBS := $(BUILD_LIBFONTMANAGER_FONTLIB), \
@@ -223,7 +223,7 @@ index 96576bb8d..13dd8e3e5 100644
      LIBS_macosx := -lawt_lwawt -framework CoreText -framework CoreFoundation -framework CoreGraphics, \
      LIBS_windows := $(WIN_JAVA_LIB) advapi32.lib user32.lib gdi32.lib \
          $(WIN_AWT_LIB), \
-@@ -777,7 +777,7 @@ ifeq ($(ENABLE_HEADLESS_ONLY), false)
+@@ -799,7 +799,7 @@ ifeq ($(ENABLE_HEADLESS_ONLY), false)
        LIBS_aix := -liconv, \
    ))
  
@@ -261,10 +261,10 @@ index 478d199e5..9477a96c9 100644
  
  ################################################################################
 diff --git a/make/modules/jdk.jdwp.agent/Lib.gmk b/make/modules/jdk.jdwp.agent/Lib.gmk
-index b5ea40803..f92adb8d3 100644
+index ba694f50e..67fc292ea 100644
 --- a/make/modules/jdk.jdwp.agent/Lib.gmk
 +++ b/make/modules/jdk.jdwp.agent/Lib.gmk
-@@ -52,6 +52,7 @@ $(eval $(call SetupJdkLibrary, BUILD_LIBJDWP, \
+@@ -53,6 +53,7 @@ $(eval $(call SetupJdkLibrary, BUILD_LIBJDWP, \
      NAME := jdwp, \
      OPTIMIZATION := LOW, \
      CFLAGS := $(CFLAGS_JDKLIB) -DJDWP_LOGGING, \
@@ -272,7 +272,7 @@ index b5ea40803..f92adb8d3 100644
      DISABLED_WARNINGS_gcc_SDE.c := unused-function, \
      DISABLED_WARNINGS_clang_error_messages.c := format-nonliteral, \
      DISABLED_WARNINGS_clang_EventRequestImpl.c := self-assign, \
-@@ -60,6 +61,7 @@ $(eval $(call SetupJdkLibrary, BUILD_LIBJDWP, \
+@@ -61,6 +62,7 @@ $(eval $(call SetupJdkLibrary, BUILD_LIBJDWP, \
      EXTRA_HEADER_DIRS := \
        include \
        libjdwp/export, \
@@ -281,7 +281,7 @@ index b5ea40803..f92adb8d3 100644
          $(call SET_SHARED_LIBRARY_ORIGIN), \
      LIBS := $(JDKLIB_LIBS), \
 diff --git a/make/modules/jdk.net/Lib.gmk b/make/modules/jdk.net/Lib.gmk
-index 2a43e81b3..ccb0afff5 100644
+index ac7648644..3269b6551 100644
 --- a/make/modules/jdk.net/Lib.gmk
 +++ b/make/modules/jdk.net/Lib.gmk
 @@ -27,7 +27,7 @@ include LibCommon.gmk
@@ -307,10 +307,10 @@ index 61fcb8a35..93d2ad4f4 100644
  }
  
 diff --git a/src/hotspot/os/linux/os_linux.cpp b/src/hotspot/os/linux/os_linux.cpp
-index 42680218d..403d8905b 100644
+index f9142f3d1..8ebccbdac 100644
 --- a/src/hotspot/os/linux/os_linux.cpp
 +++ b/src/hotspot/os/linux/os_linux.cpp
-@@ -135,7 +135,7 @@
+@@ -140,7 +140,7 @@
  // for timer info max values which include all bits
  #define ALL_64_BITS CONST64(0xFFFFFFFFFFFFFFFF)
  
@@ -319,7 +319,7 @@ index 42680218d..403d8905b 100644
  // dlvsym is not a part of POSIX
  // and musl libc doesn't implement it.
  static void *dlvsym(void *handle,
-@@ -214,6 +214,8 @@ static int clock_tics_per_sec = 100;
+@@ -218,6 +218,8 @@ static int clock_tics_per_sec = 100;
  // avoid this
  static bool suppress_primordial_thread_resolution = false;
  
@@ -328,7 +328,7 @@ index 42680218d..403d8905b 100644
  // utility functions
  
  julong os::Linux::available_memory_in_container() {
-@@ -336,11 +338,11 @@ bool os::Linux::get_tick_information(CPUPerfTicks* pticks, int which_logical_cpu
+@@ -375,11 +377,11 @@ bool os::Linux::get_tick_information(CPUPerfTicks* pticks, int which_logical_cpu
  }
  
  #ifndef SYS_gettid
@@ -342,7 +342,7 @@ index 42680218d..403d8905b 100644
        #define SYS_gettid 224
      #else
        #ifdef __amd64__
-@@ -348,6 +350,8 @@ bool os::Linux::get_tick_information(CPUPerfTicks* pticks, int which_logical_cpu
+@@ -387,6 +389,8 @@ bool os::Linux::get_tick_information(CPUPerfTicks* pticks, int which_logical_cpu
        #else
          #ifdef __sparc__
            #define SYS_gettid 143
@@ -351,7 +351,7 @@ index 42680218d..403d8905b 100644
          #else
            #error define gettid for the arch
          #endif
-@@ -535,6 +539,7 @@ extern "C" void breakpoint() {
+@@ -574,6 +578,7 @@ extern "C" void breakpoint() {
  // detecting pthread library
  
  void os::Linux::libpthread_init() {
@@ -359,7 +359,7 @@ index 42680218d..403d8905b 100644
    // Save glibc and pthread version strings.
  #if !defined(_CS_GNU_LIBC_VERSION) || \
      !defined(_CS_GNU_LIBPTHREAD_VERSION)
-@@ -559,6 +564,9 @@ void os::Linux::libpthread_init() {
+@@ -598,6 +603,9 @@ void os::Linux::libpthread_init() {
    confstr(_CS_GNU_LIBPTHREAD_VERSION, str, n);
    os::Linux::set_libpthread_version(str);
  #endif
@@ -369,7 +369,7 @@ index 42680218d..403d8905b 100644
  }
  
  /////////////////////////////////////////////////////////////////////////////
-@@ -1348,7 +1356,13 @@ int os::current_process_id() {
+@@ -1439,7 +1447,13 @@ int os::current_process_id() {
  
  // This must be hard coded because it's the system's temporary
  // directory not the java application's temp directory, ala java.io.tmpdir.
@@ -384,7 +384,7 @@ index 42680218d..403d8905b 100644
  
  // check if addr is inside libjvm.so
  bool os::address_is_in_vm(address addr) {
-@@ -1420,6 +1434,30 @@ bool os::dll_address_to_library_name(address addr, char* buf,
+@@ -1511,6 +1525,30 @@ bool os::dll_address_to_library_name(address addr, char* buf,
    return false;
  }
  
@@ -415,7 +415,7 @@ index 42680218d..403d8905b 100644
  // Remember the stack's state. The Linux dynamic linker will change
  // the stack to 'executable' at most once, so we must safepoint only once.
  bool os::Linux::_stack_is_executable = false;
-@@ -1753,6 +1791,7 @@ void * os::Linux::dll_load_in_vmthread(const char *filename, char *ebuf,
+@@ -1844,6 +1882,7 @@ void * os::Linux::dll_load_in_vmthread(const char *filename, char *ebuf,
  }
  
  const char* os::Linux::dll_path(void* lib) {
@@ -423,7 +423,7 @@ index 42680218d..403d8905b 100644
    struct link_map *lmap;
    const char* l_path = nullptr;
    assert(lib != nullptr, "dll_path parameter must not be null");
-@@ -1762,6 +1801,9 @@ const char* os::Linux::dll_path(void* lib) {
+@@ -1853,6 +1892,9 @@ const char* os::Linux::dll_path(void* lib) {
      l_path = lmap->l_name;
    }
    return l_path;
@@ -433,7 +433,7 @@ index 42680218d..403d8905b 100644
  }
  
  static unsigned count_newlines(const char* s) {
-@@ -2475,6 +2517,20 @@ void os::jvm_path(char *buf, jint buflen) {
+@@ -2608,6 +2650,20 @@ void os::jvm_path(char *buf, jint buflen) {
                                           CAST_FROM_FN_PTR(address, os::jvm_path),
                                           dli_fname, sizeof(dli_fname), nullptr);
    assert(ret, "cannot locate libjvm");
@@ -454,7 +454,7 @@ index 42680218d..403d8905b 100644
    char *rp = nullptr;
    if (ret && dli_fname[0] != '\0') {
      rp = os::Posix::realpath(dli_fname, buf, buflen);
-@@ -2540,6 +2596,7 @@ void os::jvm_path(char *buf, jint buflen) {
+@@ -2673,6 +2729,7 @@ void os::jvm_path(char *buf, jint buflen) {
        }
      }
    }
@@ -462,7 +462,7 @@ index 42680218d..403d8905b 100644
  
    strncpy(saved_jvm_path, buf, MAXPATHLEN);
    saved_jvm_path[MAXPATHLEN - 1] = '\0';
-@@ -2855,7 +2912,8 @@ void os::Linux::sched_getcpu_init() {
+@@ -2988,7 +3045,8 @@ void os::Linux::sched_getcpu_init() {
    }
  
    if (sched_getcpu() == -1) {
@@ -472,7 +472,7 @@ index 42680218d..403d8905b 100644
    }
  }
  
-@@ -3475,6 +3533,7 @@ bool os::Linux::hugetlbfs_sanity_check(bool warn, size_t page_size) {
+@@ -3629,6 +3687,7 @@ bool os::Linux::hugetlbfs_sanity_check(bool warn, size_t page_size) {
  }
  
  bool os::Linux::shm_hugetlbfs_sanity_check(bool warn, size_t page_size) {
@@ -480,7 +480,7 @@ index 42680218d..403d8905b 100644
    // Try to create a large shared memory segment.
    int shmid = shmget(IPC_PRIVATE, page_size, SHM_HUGETLB|IPC_CREAT|SHM_R|SHM_W);
    if (shmid == -1) {
-@@ -3496,6 +3555,10 @@ bool os::Linux::shm_hugetlbfs_sanity_check(bool warn, size_t page_size) {
+@@ -3650,6 +3709,10 @@ bool os::Linux::shm_hugetlbfs_sanity_check(bool warn, size_t page_size) {
    // Managed to create a segment, now delete it.
    shmctl(shmid, IPC_RMID, nullptr);
    return true;
@@ -491,7 +491,7 @@ index 42680218d..403d8905b 100644
  }
  
  // From the coredump_filter documentation:
-@@ -3759,6 +3822,8 @@ void os::large_page_init() {
+@@ -3883,6 +3946,8 @@ void os::large_page_init() {
    #define SHM_HUGETLB 04000
  #endif
  
@@ -500,7 +500,7 @@ index 42680218d..403d8905b 100644
  #define shm_warning_format(format, ...)              \
    do {                                               \
      if (UseLargePages &&                             \
-@@ -3851,8 +3916,11 @@ static char* shmat_large_pages(int shmid, size_t bytes, size_t alignment, char*
+@@ -3975,8 +4040,11 @@ static char* shmat_large_pages(int shmid, size_t bytes, size_t alignment, char*
    }
  }
  
@@ -512,7 +512,7 @@ index 42680218d..403d8905b 100644
    // "exec" is passed in but not used.  Creating the shared image for
    // the code cache doesn't have an SHM_X executable permission to check.
    assert(UseLargePages && UseSHM, "only for SHM large pages");
-@@ -3897,6 +3965,10 @@ char* os::Linux::reserve_memory_special_shm(size_t bytes, size_t alignment,
+@@ -4021,6 +4089,10 @@ char* os::Linux::reserve_memory_special_shm(size_t bytes, size_t alignment,
    shmctl(shmid, IPC_RMID, nullptr);
  
    return addr;
@@ -523,7 +523,7 @@ index 42680218d..403d8905b 100644
  }
  
  static void log_on_commit_special_failure(char* req_addr, size_t bytes,
-@@ -4023,8 +4095,13 @@ char* os::pd_reserve_memory_special(size_t bytes, size_t alignment, size_t page_
+@@ -4147,8 +4219,13 @@ char* os::pd_reserve_memory_special(size_t bytes, size_t alignment, size_t page_
  }
  
  bool os::Linux::release_memory_special_shm(char* base, size_t bytes) {
@@ -537,7 +537,7 @@ index 42680218d..403d8905b 100644
  }
  
  bool os::Linux::release_memory_special_huge_tlbfs(char* base, size_t bytes) {
-@@ -5101,7 +5178,46 @@ bool os::is_thread_cpu_time_supported() {
+@@ -5232,7 +5309,46 @@ bool os::is_thread_cpu_time_supported() {
  // Linux doesn't yet have a (official) notion of processor sets,
  // so just return the system wide load average.
  int os::loadavg(double loadavg[], int nelem) {
@@ -903,7 +903,7 @@ index ff416d47e..fca2f6aa4 100644
     /proc/[number]/stat
                Status information about the process.  This is used by ps(1).  It is defined in /usr/src/linux/fs/proc/array.c.
 diff --git a/src/hotspot/os/posix/os_posix.cpp b/src/hotspot/os/posix/os_posix.cpp
-index cf0f48974..04a5930b5 100644
+index 893ca3a7b..c095fcb82 100644
 --- a/src/hotspot/os/posix/os_posix.cpp
 +++ b/src/hotspot/os/posix/os_posix.cpp
 @@ -74,7 +74,9 @@
@@ -932,7 +932,7 @@ index cf0f48974..04a5930b5 100644
  }
  
  static void print_rlimit(outputStream* st, const char* msg,
-@@ -1921,11 +1925,31 @@ int os::fork_and_exec(const char* cmd) {
+@@ -1923,11 +1927,31 @@ int os::fork_and_exec(const char* cmd) {
    const char* argv[4] = {"sh", "-c", cmd, nullptr};
    pid_t pid = -1;
    char** env = os::get_environ();
@@ -964,7 +964,7 @@ index cf0f48974..04a5930b5 100644
      int status;
      // Wait for the child process to exit.  This returns immediately if
      // the child has already exited. */
-@@ -1950,9 +1974,11 @@ int os::fork_and_exec(const char* cmd) {
+@@ -1952,9 +1976,11 @@ int os::fork_and_exec(const char* cmd) {
        // Unknown exit code; pass it through
        return status;
      }
@@ -976,6 +976,20 @@ index cf0f48974..04a5930b5 100644
    }
  }
  
+diff --git a/src/hotspot/os_cpu/linux_aarch64/javaThread_linux_aarch64.hpp b/src/hotspot/os_cpu/linux_aarch64/javaThread_linux_aarch64.hpp
+index c6e012ecf..d4f956756 100644
+--- a/src/hotspot/os_cpu/linux_aarch64/javaThread_linux_aarch64.hpp
++++ b/src/hotspot/os_cpu/linux_aarch64/javaThread_linux_aarch64.hpp
+@@ -47,6 +47,8 @@ private:
+   bool pd_get_top_frame(frame* fr_addr, void* ucontext, bool isInJava);
+ public:
+ 
+-  static Thread *aarch64_get_thread_helper();
++  static Thread *aarch64_get_thread_helper() {
++    return Thread::current();
++  }
+ 
+ #endif // OS_CPU_LINUX_AARCH64_JAVATHREAD_LINUX_AARCH64_HPP
 diff --git a/src/hotspot/os_cpu/linux_aarch64/threadLS_linux_aarch64.S b/src/hotspot/os_cpu/linux_aarch64/threadLS_linux_aarch64.S
 index ac60d6aa9..0645f0e00 100644
 --- a/src/hotspot/os_cpu/linux_aarch64/threadLS_linux_aarch64.S
@@ -1183,7 +1197,7 @@ index eb560d8f0..be8da136b 100644
          cmp     r2, #16
  	blt	cl_b2f_copy_8
 diff --git a/src/hotspot/os_cpu/linux_arm/os_linux_arm.cpp b/src/hotspot/os_cpu/linux_arm/os_linux_arm.cpp
-index d4c9bb304..3123efef2 100644
+index 86e8ed256..8a80c3dbd 100644
 --- a/src/hotspot/os_cpu/linux_arm/os_linux_arm.cpp
 +++ b/src/hotspot/os_cpu/linux_arm/os_linux_arm.cpp
 @@ -72,7 +72,11 @@
@@ -1340,7 +1354,7 @@ index 000000000..605302c09
 +
 +#endif	/* fpu_control.h */
 diff --git a/src/hotspot/os_cpu/linux_x86/os_linux_x86.cpp b/src/hotspot/os_cpu/linux_x86/os_linux_x86.cpp
-index 90c7d3c93..0a10fba48 100644
+index 6cee67a86..386ee3cb1 100644
 --- a/src/hotspot/os_cpu/linux_x86/os_linux_x86.cpp
 +++ b/src/hotspot/os_cpu/linux_x86/os_linux_x86.cpp
 @@ -74,8 +74,10 @@
@@ -1356,7 +1370,7 @@ index 90c7d3c93..0a10fba48 100644
  
  #ifdef AMD64
 diff --git a/src/hotspot/share/utilities/elfFile.hpp b/src/hotspot/share/utilities/elfFile.hpp
-index 32ce08821..7103f3736 100644
+index bad92f82a..c245fa4dc 100644
 --- a/src/hotspot/share/utilities/elfFile.hpp
 +++ b/src/hotspot/share/utilities/elfFile.hpp
 @@ -47,8 +47,10 @@ typedef Elf64_Phdr      Elf_Phdr;
@@ -1380,7 +1394,7 @@ index 32ce08821..7103f3736 100644
  #endif
  #endif
 diff --git a/src/hotspot/share/utilities/globalDefinitions_gcc.hpp b/src/hotspot/share/utilities/globalDefinitions_gcc.hpp
-index 3da670ef4..89f2d944a 100644
+index 0d7b1164a..1bbf358ab 100644
 --- a/src/hotspot/share/utilities/globalDefinitions_gcc.hpp
 +++ b/src/hotspot/share/utilities/globalDefinitions_gcc.hpp
 @@ -48,6 +48,10 @@
@@ -1959,7 +1973,7 @@ index 230de04c0..8e858b736 100644
  #if !defined(P_tmpdir)
  #include <paths.h>
 diff --git a/src/java.base/unix/native/libjava/jni_util_md.c b/src/java.base/unix/native/libjava/jni_util_md.c
-index 460503cd7..193480e73 100644
+index 32b477aa7..03d31e777 100644
 --- a/src/java.base/unix/native/libjava/jni_util_md.c
 +++ b/src/java.base/unix/native/libjava/jni_util_md.c
 @@ -31,7 +31,7 @@
@@ -2184,7 +2198,7 @@ index 000000000..388016eb3
 +
 +#endif
 diff --git a/src/java.base/unix/native/libjli/java_md.c b/src/java.base/unix/native/libjli/java_md.c
-index 21ef40688..b8c2520d2 100644
+index 024cec571..20ae0d515 100644
 --- a/src/java.base/unix/native/libjli/java_md.c
 +++ b/src/java.base/unix/native/libjli/java_md.c
 @@ -584,7 +584,58 @@ const char*
@@ -2273,7 +2287,7 @@ index 902cf9673..3b8acd66b 100644
  #include <poll.h>
  #include <sys/socket.h>
 diff --git a/src/java.base/unix/native/libnio/fs/UnixNativeDispatcher.c b/src/java.base/unix/native/libnio/fs/UnixNativeDispatcher.c
-index 9371bc001..ab7dd0fc0 100644
+index 90c0a52d7..ce25fb940 100644
 --- a/src/java.base/unix/native/libnio/fs/UnixNativeDispatcher.c
 +++ b/src/java.base/unix/native/libnio/fs/UnixNativeDispatcher.c
 @@ -140,6 +140,7 @@ typedef int fstatat64_func(int, const char *, struct stat64 *, int);
@@ -2483,17 +2497,3 @@ index f5573930d..b64e30046 100644
          }
  
          if (codeset == NULL) {
-diff --git a/src/hotspot/os_cpu/linux_aarch64/javaThread_linux_aarch64.hpp b/src/hotspot/os_cpu/linux_aarch64/javaThread_linux_aarch64.hpp
-index c6e012ecf..d4f956756 100644
---- a/src/hotspot/os_cpu/linux_aarch64/javaThread_linux_aarch64.hpp
-+++ b/src/hotspot/os_cpu/linux_aarch64/javaThread_linux_aarch64.hpp
-@@ -47,6 +47,8 @@ private:
-   bool pd_get_top_frame(frame* fr_addr, void* ucontext, bool isInJava);
- public:
- 
--  static Thread *aarch64_get_thread_helper();
-+  static Thread *aarch64_get_thread_helper() {
-+    return Thread::current();
-+  }
- 
- #endif // OS_CPU_LINUX_AARCH64_JAVATHREAD_LINUX_AARCH64_HPP
